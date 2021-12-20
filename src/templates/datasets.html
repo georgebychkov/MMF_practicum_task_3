@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Введение данных{% endblock %}
+
+{% block content %}
+
+<center>
+<h1><font size="5" color="Black">Данные</font></h1>
+
+<p>Это страница для загрузки файлов с данными для обработки моделями.
+Файлы должны быть формата csv, первый столбец должен представлять собой столбец индексов.
+Среди столбцов должна присутствовать целевая переменная, название которой нужно указать при загрузке файла. 
+Эти данные в дальнейшем можно будет использовать в качестве обучающей выборки, так и в качестве тестовой выборки.
+Посмотреть список моделей или загрузить новые можно <a href={{ url_for('get_models') }}>здесь</a></p>
+
+<form method='POST' enctype="multipart/form-data" action={{ url_for('get_data')}}>
+    {{ form.csrf_token }}
+    <div class='field'>
+        {{ form.name.label }}
+        {{ form.name(size=20) }}
+    </div>
+    <div class='field'>
+        {{ form.features_file.label }}
+        {{ form.features_file() }}
+    </div>
+    <div class='field'>
+        {{ form.target_name.label }}
+        {{ form.target_name(size=20) }}
+    </div>
+    <input type="submit" value="Ввести">
+</form>
+
+<h3>Список датасетов:</h3>
+  <ul>
+  {% for name, dataset in datasets.items(): %}
+    <li><u><b>{{ name }}</b></u>, целевая переменная — 
+        <i>{{ dataset.target_name}}</i>.
+        Первые несколько объектов:
+    </li>
+      {{ dataset.data.head().to_html()| safe }}
+      <br>
+  {% endfor %}
+  </ul>
+
+<br>
+<a href="{{ url_for('get_models') }}"><button>К моделям</button></a>
+<a href="{{ url_for('get_index') }}"><button>В главное меню</button></a>
+
+
+</center>
+{% endblock %}
