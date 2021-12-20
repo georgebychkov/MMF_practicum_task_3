@@ -21,7 +21,9 @@
 Далее можно обучить модель. Полученные данные в виду их возможного большого размера скачиваются в виде csv файла.
 ![5](https://user-images.githubusercontent.com/71818055/146713992-4a6a3e70-6a95-4a42-a200-06fbc82153e7.jpg)
 
-    
+Для скачивания можно воспользоваться командой:
+`docker pull bychkovgk/ensembles`
+
 Для собственной сборки можно воспользоваться командами:
 1. `docker build -t bychkovgk/ensembles .`
 2. `docker run -p 5000:5000 --rm -i bychkovgk/ensembles`
