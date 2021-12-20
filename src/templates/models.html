@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Создание модели{% endblock %}
+
+{% block content %}
+<center>
+<h1><font size="5" color="Black">Создание модели</font></h1>
+
+<p>Это страница для создания и обучения моделей.
+Внизу можно выбрать тип ансамбля (случайный лес или градиентный бустинг), а так же задать их гиперпараметры.
+По умолчанию параметры следующие: количество деревьев 100, максимальная глубина не ограничена, 
+размерность подвыборки для одного дерева равна количеству признаков. Чтобы добавить датасет, можно перейти <a href={{ url_for('get_data') }}>по ссылке</a></p>
+
+<h3>Добавить новую модель:</h3>
+<form method='POST' action={{ url_for('get_models') }}>
+  <div class='field'>
+    {{ form.name.label }}
+    {{ form.name(size=20) }}
+  </div>
+  <div class='field'>
+    {{ form.model_type.label }}
+    {{ form.model_type() }}
+  </div>
+  <div class='field'>
+    {{ form.n_estimators.label }}
+    {{ form.n_estimators(size=20) }}
+  </div>
+  <div class='field'>
+    {{ form.learning_rate.label }}
+    {{ form.learning_rate(size=20) }}
+  </div>
+  <div class='field'>
+    {{ form.feature_subsample_size.label }}
+    {{ form.feature_subsample_size(size=20) }}
+  </div>
+  <div class='field'>
+    {{ form.trees_parameters.label }}
+    {{ form.trees_parameters(size=20) }}
+  </div>
+  <input type="submit" value="Сохранить модель">
+</form>
+  
+<h3>Список моделей:</h3>
+<ul>
+  {% for name in models: %}
+    <li><a href={{ url_for('model_page', name=name) }}>{{ name }}</a></li>
+  {% endfor %}
+</ul>
+
+<br>
+<a href="{{ url_for('get_data') }}"><button>К датасетам</button></a>
+<a href="{{ url_for('get_index') }}"><button>В главное меню</button></a>
+
+</center>
+{% endblock %}

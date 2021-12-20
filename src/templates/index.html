@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<center>
+    <h1><font size="5" color="Black">Добро пожаловать. 
+	Это программа для демонстрации случайного леса и градиентного бустинга</font></h1>
+
+
+<style>
+.main_button {
+    -webkit-writing-mode: horizontal-tb !important;
+    -webkit-appearance: button;
+    border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
+    border-style: solid;
+    border-width: 1px;
+    padding: 1px 7px 2px;
+    text-rendering: auto;
+    color: initial;
+    display: inline-block;
+    text-align: start;
+    margin: 0em;
+    font: 400 11px system-ui;
+}
+</style>
+
+<a href={{ url_for('get_data') }} class="main_button">Файлы с данными</a>
+&nbsp;
+&nbsp;
+<a href={{ url_for('get_models') }} class="main_button">Модели</a>
+&nbsp;
+&nbsp;
+<a href={{ 'https://github.com/georgebychkov/MMF_practicum_task_3/tree/main' }} class="main_button">Репозиторий на GitHub</a>
+&nbsp;
+&nbsp;
+<a href={{ 'https://hub.docker.com/repository/docker/bychkovgk/ensembles' }} class="main_button">Репозиторий на DockerHub</a>
+</center>
+{% endblock %}

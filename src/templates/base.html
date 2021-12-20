@@ -1,0 +1,26 @@
+<!doctype html>
+
+<html lang="ru">
+
+<head>
+  <meta charset='utf-8'>
+  <title>{% block title %}{% endblock %} — реализация веб-интерфейса взаимодействия с ансамблями</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+{% block content %}{% endblock %}
+</body>
+
+<style>.error {background-color: red; color: white;}</style>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+</html>

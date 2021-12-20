@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %} {{ model.name }} {% endblock %}
+
+{% block content %}
+<center>
+<h1><font size="5" color="Black">Сведения о модели под названием: {{ model.name }}</font></h1>
+
+<p>Это страница для обучения и просмотра параметров моделей.
+Сначала можно обучить модели на уже созданных файлах с данными (конечно они состоять из одних и тех же данных).
+После обучения, можно будет предсказать значения на каком-нибудь датасете с теми же столбцами.
+Чтобы загрузить датасеты можно перейти <a href={{ url_for('get_data') }}>по ссылке</a>
+</p>
+
+    <h3>Информация о модели и ее гиперпараметрах:</h3>
+
+    <div>{{ model.description.to_html(index=False) | safe }}</div>
+    <br>
+    <div>
+    {% if model.is_fitted %}
+	  <h3>
+      Предпросмотр датасета
+      </h3>
+	  <div>{{ datasets[model.fitted_on].data.head().to_html()| safe }}</div>
+      <h3>
+      График функции ошибок
+      </h3>
+      <img src={{ url_for('plot_png', name=model.name) }} alt='Error: Нет графика'
+                   width=50%>
+      <p>Модель обучена. <br/>
+      </p>
+      <form method='POST' action={{ url_for('model_page', name=model.name) }}>
+        <div class='field'>
+            {{ test_form.test_data.label }}
+            {{ test_form.test_data() }}
+        </div>
+        <input type="submit" value="Предсказать">
+      </form>
+    {% else %}
+        <p>Модель еще не обучена.</p>
+        <form method='POST' action={{ url_for('model_page', name=model.name) }}>
+        <div class='field'>
+            {{ learn_form.train_data.label }}
+            {{ learn_form.train_data() }}
+        </div>
+        <div class='field'>
+            {{ learn_form.val_data.label }}
+            {{ learn_form.val_data() }}
+        </div>
+        <input type="submit" value="Обучить модель">
+      </form>
+
+    {% endif %}
+    </div>
+
+<br>
+<a href="{{ url_for('get_models') }}"><button>К созданию модели</button></a>
+<a href="{{ url_for('get_index') }}"><button>В главное меню</button></a>
+</center>
+{% endblock %}
